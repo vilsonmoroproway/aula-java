@@ -1,0 +1,13 @@
+comandos de configuração
+ > git status
+ > git init
+ > git remote -v
+> git remote add origin https://github.com/vilsonmoroproway/aula-java.git
+
+> git branch -M main
+
+Comandos de operação
+git status
+git add ??
+git commit -m "Projeto criado"
+git push -u origin main 
