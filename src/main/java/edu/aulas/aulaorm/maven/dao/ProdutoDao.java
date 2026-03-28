@@ -4,7 +4,7 @@
  */
 package edu.aulas.aulaorm.maven.dao;
 
-import edu.aulas.aulaorm.maven.Produto;
+import edu.aulas.aulaorm.maven.modelos.Produto;
 import edu.aulas.aulaorm.maven.interfaces.IReadDB;
 import edu.aulas.aulaorm.maven.interfaces.IWriteDB;
 import edu.aulas.aulaorm.maven.utils.ConexaoDB;
@@ -55,7 +55,20 @@ public class ProdutoDao implements IWriteDB<Produto>, IReadDB<Produto>{
 
     @Override
     public void excluir(Produto t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       EntityManager em = ConexaoDB.getConexao().createEntityManager();
+        try{
+            Produto produtoExistente = em.find(Produto.class, t.getId());
+            if(produtoExistente == null){
+                throw new RuntimeException("Produto não cadastrado");
+            }
+            em.getTransaction().begin();
+            em.remove(t);
+            em.getTransaction().commit();
+           
+            em.close();
+        }catch(Exception ex){
+           throw new RuntimeException(ex.getMessage());
+        }  
     }
 
     @Override

@@ -4,9 +4,10 @@
 
 package edu.aulas.aulaorm.maven;
 
+import edu.aulas.aulaorm.maven.modelos.Produto;
 import edu.aulas.aulaorm.maven.dao.ProdutoDao;
+import edu.aulas.aulaorm.maven.views.CadastroProduto;
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  *
@@ -30,13 +31,14 @@ public class AulaORMMaven {
         }
         */
        
-       Produto p = new Produto();
+      /* Produto p = new Produto();
        //Produto p = new ProdutoDao().consultar(1l);
        p.setId(1l);
        p.setDescricao("Milho de pipoca doce");
        p.setEstoque(20);
        p.setPreco(new BigDecimal(5.5));
        new ProdutoDao().alterar(p);
-       
+       */
+        new CadastroProduto().setVisible(true);
     }
 }
