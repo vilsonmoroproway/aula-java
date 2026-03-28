@@ -1,0 +1,6 @@
+edu\aulas\aulaorm\maven\dao\ProdutoDao.class
+edu\aulas\aulaorm\maven\utils\ConexaoDB.class
+edu\aulas\aulaorm\maven\interfaces\IReadDB.class
+edu\aulas\aulaorm\maven\interfaces\IWriteDB.class
+edu\aulas\aulaorm\maven\AulaORMMaven.class
+edu\aulas\aulaorm\maven\Produto.class
