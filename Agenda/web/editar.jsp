@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="./estilos/styles.css" />
     </head>
     <body>
         <%
@@ -25,7 +26,7 @@
             <input type="text" placeholder="Ex: ana" name="nome" value="<%= contato.getNome() %>"/>
             <label>Informe email</label>
             <input type="text" placeholder="Ex: ana@gmail.com" name="email" value="<%= contato.getEmail()%>"/>
-            <button>Enviar</button>
+            <button class="bt-editar">Enviar</button>
         </form>
     </body>
 </html>
