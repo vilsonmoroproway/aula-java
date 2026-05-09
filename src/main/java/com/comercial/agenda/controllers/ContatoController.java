@@ -1,9 +1,7 @@
 package com.comercial.agenda.controllers;
 
 import com.comercial.agenda.modelos.Contato;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,4 +23,36 @@ public class ContatoController {
         return lista;
     }
 
+    @GetMapping("/{id}")
+    public Contato getOne(@PathVariable Long id){
+        for(Contato ct : lista){
+            if (ct.getId() == id)
+                return  ct;
+        }
+        return null;
+    }
+
+    @PostMapping
+    public Contato gravar(@RequestBody Contato contato){
+        contato.setId(lista.size()+1l);
+        lista.add(contato);
+        return contato;
+    }
+    @PutMapping("/{id}")
+    public Object alterar(@PathVariable Long id, @RequestBody Contato contato){
+        Contato ct = null;
+
+        for(Contato c : lista){
+           if (c.getId() == id) {
+               ct = c;
+               break;
+           }
+        }
+        if(ct != null){
+           ct.setNome(contato.getNome());
+           ct.setEmail(contato.getEmail());
+           return "Contato alterado com sucesso";
+        }
+        return "O contato não existe";
+    }
 }
