@@ -24,12 +24,12 @@ public class ContatoController {
     }
 
     @GetMapping("/{id}")
-    public Contato getOne(@PathVariable Long id){
-        for(Contato ct : lista){
-            if (ct.getId() == id)
-                return  ct;
+    public Object getOne(@PathVariable Long id){
+        Contato ct = procurarUm(id);
+        if(ct != null){
+            return ct;
         }
-        return null;
+        return "O contato não existe";
     }
 
     @PostMapping
@@ -40,14 +40,7 @@ public class ContatoController {
     }
     @PutMapping("/{id}")
     public Object alterar(@PathVariable Long id, @RequestBody Contato contato){
-        Contato ct = null;
-
-        for(Contato c : lista){
-           if (c.getId() == id) {
-               ct = c;
-               break;
-           }
-        }
+        Contato ct = procurarUm(id);
         if(ct != null){
            ct.setNome(contato.getNome());
            ct.setEmail(contato.getEmail());
@@ -55,4 +48,24 @@ public class ContatoController {
         }
         return "O contato não existe";
     }
+
+    @DeleteMapping("/{id}")
+    public String remover(@PathVariable Long id) {
+        Contato ct = procurarUm(id);
+        if(ct != null){
+            lista.remove(ct);
+            return "Contato excluido com sucesso";
+        }
+        return "O contato não existe";
+    }
+
+    private Contato procurarUm(Long id){
+        for(Contato c : lista){
+            if (c.getId() == id) {
+                return c;
+            }
+        }
+        return null;
+    }
+
 }
