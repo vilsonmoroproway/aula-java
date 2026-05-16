@@ -1,5 +1,6 @@
 package com.comercial.agenda.services;
 
+import com.comercial.agenda.excecoes.ProdutoNotFoundException;
 import com.comercial.agenda.modelos.Contato;
 import com.comercial.agenda.modelos.Produto;
 import com.comercial.agenda.repositories.ContatoRepository;
@@ -35,7 +36,7 @@ public class ProdutoService {
 
     public Produto listarUm(Long id){
         Optional<Produto> opt = repository.findById(id);
-        return opt.orElseThrow(() -> new RuntimeException("O produto informado não existe"));
+        return opt.orElseThrow(() -> new ProdutoNotFoundException("O produto informado não existe"));
     }
 
     public void deletar(Long id){
