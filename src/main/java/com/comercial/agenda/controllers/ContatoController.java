@@ -17,48 +17,47 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ContatoController {
     @Autowired
     ContatoService service;
-    private List<Contato> lista = new ArrayList<>();
-
-    public ContatoController(){
-      lista.add(new Contato(1l,"maria","maria@gmail.com"));
-      lista.add(new Contato(2l,"ana","ana@gmail.com"));
-    }
-
     @GetMapping
     public  ResponseEntity<Object> listar(){
-        try{
+      /*  try{
             return ResponseEntity.status(HttpStatus.OK).body(service.listar());
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        }*/
+        return ResponseEntity.status(HttpStatus.OK).body(service.listar());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOne(@PathVariable Long id){
-        try{
+       /* try{
            return ResponseEntity.status(HttpStatus.OK).body(service.listarUm(id));
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        }*/
+        return ResponseEntity.status(HttpStatus.OK).body(service.listarUm(id));
     }
 
     @PostMapping
     public ResponseEntity<Object> gravar(@RequestBody Contato contato){
-        try{
+       /* try{
             contato = service.salvar(contato);
             return ResponseEntity.status(HttpStatus.CREATED).body(contato);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        }*/
+        contato = service.salvar(contato);
+        return ResponseEntity.status(HttpStatus.CREATED).body(contato);
     }
     @PutMapping("/{id}")
     public Object alterar(@PathVariable Long id, @RequestBody Contato contato){
-        try{
+       /* try{
             contato = service.alterar(id, contato);
             return ResponseEntity.status(HttpStatus.OK).body(contato);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        }*/
+        contato = service.alterar(id, contato);
+        return ResponseEntity.status(HttpStatus.OK).body(contato);
     }
 
     @DeleteMapping("/{id}")
@@ -70,13 +69,5 @@ public class ContatoController {
         }
     }
 
-    private Contato procurarUm(Long id){
-        for(Contato c : lista){
-            if (c.getId() == id) {
-                return c;
-            }
-        }
-        return null;
-    }
 
 }

@@ -1,5 +1,7 @@
 package com.comercial.agenda.services;
 
+import com.comercial.agenda.excecoes.ContatoCampoInvalidoException;
+import com.comercial.agenda.excecoes.ContatoNotFoundException;
 import com.comercial.agenda.modelos.Contato;
 import com.comercial.agenda.repositories.ContatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,10 @@ public class ContatoService {
 
     public Contato salvar(Contato ct){
         if(ct.getNome().trim().equals("")){
-            throw  new RuntimeException("O nome deve ser informado");
+            throw  new ContatoCampoInvalidoException("O nome deve ser informado");
         }
         if(ct.getEmail().trim().equals("")){
-            throw  new RuntimeException("O email deve ser informado");
+            throw  new ContatoCampoInvalidoException("O email deve ser informado");
         }
         return repository.save(ct);
     }
@@ -27,10 +29,10 @@ public class ContatoService {
         Contato contato = listarUm(id);
 
         if(ct.getNome().trim().equals("")){
-            throw  new RuntimeException("O nome deve ser informado");
+            throw  new ContatoCampoInvalidoException("O nome deve ser informado");
         }
         if(ct.getEmail().trim().equals("")){
-            throw  new RuntimeException("O email deve ser informado");
+            throw  new ContatoCampoInvalidoException("O email deve ser informado");
         }
         contato.setNome(ct.getNome());
         contato.setEmail(ct.getEmail());
@@ -43,7 +45,7 @@ public class ContatoService {
 
     public Contato listarUm(Long id){
         Optional<Contato> opt = repository.findById(id);
-        return opt.orElseThrow(() -> new RuntimeException("O contato informado não existe"));
+        return opt.orElseThrow(() -> new ContatoNotFoundException("O contato informado não existe"));
     }
 
     public void deletar(Long id){
