@@ -1,7 +1,13 @@
 package com.comercial.agenda.modelos;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table( name = "tb_contatos")
 public class Contato {
-    private long id;
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO)
+    private Long id;
     private String nome;
     private String email;
 
@@ -11,11 +17,11 @@ public class Contato {
         this.email = email;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
