@@ -15,14 +15,26 @@ public class GlobalExceptionHanlder {
             ContatoCampoInvalidoException ex,
             HttpServletRequest request){
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+             ErroResposta erro = new ErroResposta(
+                     HttpStatus.BAD_REQUEST.value(),
+                     "Campos não informados",
+                     ex.getMessage(),
+                     request.getRequestURI()
+             );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
     }
 
     @ExceptionHandler(ContatoNotFoundException.class)
     public ResponseEntity<?> contatoNotFound(
             ContatoNotFoundException ex,
             HttpServletRequest request){
+        ErroResposta erro = new ErroResposta(
+                HttpStatus.NOT_FOUND.value(),
+                "Recurso não encontrado",
+                ex.getMessage(),
+                request.getRequestURI()
+        );
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
     }
 }
