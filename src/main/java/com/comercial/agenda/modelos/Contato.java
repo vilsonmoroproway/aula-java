@@ -11,7 +11,9 @@ public class Contato {
     private String nome;
     private String email;
 
-    public Contato(long id, String nome, String email) {
+    public Contato() {
+    }
+    public Contato(Long id, String nome, String email) {
         this.id = id;
         this.nome = nome;
         this.email = email;
