@@ -23,22 +23,20 @@ public class PedidoService {
 
         ProdutoDTO produto = produtoClient.buscarProduto(pedido.getIdProduto());
 
-        // VERIFICA ESTOQUE
-        if(produto.getEstoque()
-                < pedido.getQuantidade()) {
+        if(produto == null){
+            throw new RuntimeException("Produto não existe");
+        }
 
-            throw new RuntimeException(
-                    "Estoque insuficiente");
+        // VERIFICA ESTOQUE
+        if(produto.getEstoque() < pedido.getQuantidade()) {
+            throw new RuntimeException("Estoque insuficiente");
         }
 
         // CALCULA NOVO ESTOQUE
-        int novoEstoque =
-                produto.getEstoque()
-                        - pedido.getQuantidade();
+        int novoEstoque =  produto.getEstoque() - pedido.getQuantidade();
 
         // ATUALIZA ESTOQUE
         produtoClient.atualizarEstoque( produto.getId(), novoEstoque);
-
 
         // SALVA PEDIDO
         return repository.save(pedido);

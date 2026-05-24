@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
         name = "produto-api",
         url = "http://localhost:8081")
 public interface ProdutoClient {
-
     @GetMapping("/produtos/{id}")
     ProdutoDTO buscarProduto( @PathVariable Long id);
 
     @PutMapping("/produtos/{id}/estoque")
-    void atualizarEstoque(@PathVariable Long id,
-            @RequestParam Integer quantidade);
+    void atualizarEstoque(@PathVariable Long id, @RequestParam Integer quantidade);
 }
