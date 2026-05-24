@@ -1,30 +1,34 @@
 package com.pedido.pedido;
 
 import com.pedido.pedido.dto.ProdutoDTO;
-import com.pedido.pedido.interfaces.ProdutoClient;
 import com.pedido.pedido.modelos.Pedido;
 import com.pedido.pedido.repositories.PedidoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class PedidoService {
     private final PedidoRepository repository;
+    private final WebClient webClient;
 
-    private ProdutoClient produtoClient;
 
     public PedidoService(
             PedidoRepository repository,
-            ProdutoClient produtoClient) {
+            WebClient webClient) {
 
         this.repository = repository;
-        this.produtoClient = produtoClient;
+        this.webClient = webClient;
     }
     public Pedido realizarPedido(Pedido pedido) {
+        ProdutoDTO produto = webClient
+                .get()
+                .uri("/produtos/{id}", pedido.getIdProduto())
+                .retrieve()
+                .bodyToMono(ProdutoDTO.class)
+                .block();
 
-        ProdutoDTO produto = produtoClient.buscarProduto(pedido.getIdProduto());
-
-        if(produto == null){
-            throw new RuntimeException("Produto não existe");
+        if (produto == null) {
+            throw new RuntimeException("Produto não encontrado");
         }
 
         // VERIFICA ESTOQUE
@@ -36,7 +40,17 @@ public class PedidoService {
         int novoEstoque =  produto.getEstoque() - pedido.getQuantidade();
 
         // ATUALIZA ESTOQUE
-        produtoClient.atualizarEstoque( produto.getId(), novoEstoque);
+        webClient.put()
+                .uri(uriBuilder ->
+                         uriBuilder
+                                .path("/produtos/{id}/estoque")
+                                .queryParam(
+                                        "quantidade",
+                                        novoEstoque)
+                                .build(produto.getId()))
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
 
         // SALVA PEDIDO
         return repository.save(pedido);
