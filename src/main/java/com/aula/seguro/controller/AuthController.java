@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aula.seguro.config.JwtService;
+import com.aula.seguro.dto.LoginResponse;
 import com.aula.seguro.dto.UsuarioDTO;
 import com.aula.seguro.modelos.Usuario;
 import com.aula.seguro.repositories.UsuarioRepository;
@@ -33,15 +34,12 @@ public class AuthController {
     
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UsuarioDTO request) {
-    	 System.err.println("olaza"+request.getUsername());
         Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(
                                 request.getUsername(),
                                 request.getPassword()));
 
         String token = jwtService.gerarToken(auth.getName());
-        System.err.println(token);
-
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.ok().body(new LoginResponse(token));
     }
     
     @PostMapping("/register")
