@@ -12,7 +12,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 public class UsersConfig {
 
-	@Bean
+/*	@Bean
 	public UserDetailsService userDetailsService() {
 		UserDetails admin = User.builder().username("admin").password(passwordEncoder().encode("123")).roles("ADMIN")
 				.build();
@@ -25,5 +25,5 @@ public class UsersConfig {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-	}
+	}*/
 }
