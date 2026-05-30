@@ -17,11 +17,12 @@ public class UsuarioDetailsService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		 System.err.println("Buscando usuário: " + username);
 		Usuario usuario =
 				 repository.findByUsername(username)
 				 .orElseThrow(() ->
 				 new UsernameNotFoundException("Usuário não encontrado"));
-				 		
+		 System.err.println("Usuário encontrado: " + usuario.getUsername());		 		
 		return User.builder()
 				 .username(usuario.getUsername())
 				 .password(usuario.getPassword())

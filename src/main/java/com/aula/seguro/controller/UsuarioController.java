@@ -21,7 +21,6 @@ public class UsuarioController {
 	private PasswordEncoder passwordEncoder;
 	
 	@PostMapping
-	@PreAuthorize("hasRole('ADMIN')") 
 	public Usuario cadastrar(@RequestBody Usuario usuario) {
 	  usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 	  return repository.save(usuario);
