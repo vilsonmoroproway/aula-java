@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+</head>
+<body>
+
+<h1>Área Protegida</h1>
+
+<p>Usuário autenticado!</p>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Sair</button>
+</form>
+
+</body>
+</html>
