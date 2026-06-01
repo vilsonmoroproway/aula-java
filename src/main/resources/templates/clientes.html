@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Exemplo</title>
+</head>
+<body>
+
+	<div th:if="${cliente != null}">
+		<p  th:text="${cliente.nome}"></p>
+		<p th:text="${cliente.email}"></p>
+	</div>
+	
+	
+	<div th:if="${linguagens != null}">
+		<hr />
+		
+		<ul>
+		    <li th:each="linguagem : ${linguagens}"
+		        th:text="${linguagem}">
+		    </li>
+		</ul>
+	</div>
+	
+	<hr >
+	<a th:href="@{/}"> Novo	</a>
+	<a th:href="@{/}"> Home	</a>
+
+</body>
+</html>
